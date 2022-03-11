@@ -8,14 +8,22 @@
         @method('PUT')
         <x-form.input label="Nama" name="name" placeholder="Nama product" value="{{ $product->name }}"
             error="{{ $errors->first('name') }}" />
+        <x-form.input label="Merk" name="merk" placeholder="Merk product" value="{{ $product->merk }}"
+            error="{{ $errors->first('merk') }}" />
         <x-form.select placeholder="PILIH KATEGORI" name="category_id" label="Kategori"
             error="{{ $errors->first('category_id') }}">
             @foreach ($categories as $category)
                 <option value="{{ $category->id }}" @selected($category->id == $product->category_id)>{{ $category->name }}</option>
             @endforeach
         </x-form.select>
-        <x-form.input type="number" label="Harga" name="price" placeholder="Harga product" value="{{ $product->price }}"
-            error="{{ $errors->first('price') }}" />
+        <x-form.input type="number" label="Harga Beli" name="buy_price" placeholder="Harga beli product"
+            value="{{ $product->buy_price }}" error="{{ $errors->first('buy_price') }}" />
+        <x-form.input type="number" label="Harga Jual" name="price" placeholder="Harga jual product"
+            value="{{ $product->price }}" error="{{ $errors->first('price') }}" />
+        <x-form.input type="number" label="Stok" name="stock" placeholder="Stok product" value="{{ $product->stock }}"
+            error="{{ $errors->first('stock') }}" />
+        <x-form.input label="Satuan" name="unit" placeholder="Satuan product" value="{{ $product->unit }}"
+            error="{{ $errors->first('unit') }}" />
 
 
         @if (session('product_success'))

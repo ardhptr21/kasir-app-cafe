@@ -23,11 +23,11 @@
         <button @click="showModal = true"
             class="px-5 py-3 text-white bg-indigo-600 rounded-md hover:bg-indigo-700">Tambah</button>
         <div x-show="showModal"
-            class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center overflow-auto text-gray-500 bg-black bg-opacity-40"
+            class="fixed inset-0 z-50 flex items-center justify-center p-5 overflow-auto text-gray-500 bg-black bg-opacity-40"
             x-transition:enter="transition ease duration-300" x-transition:enter-start="opacity-0"
             x-transition:enter-end="opacity-100" x-transition:leave="transition ease duration-300"
             x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
-            <div x-show="showModal" class="p-6 mx-10 bg-white shadow-2xl rounded-xl sm:w-8/12"
+            <div x-show="showModal" class="w-8/12 max-h-full p-6 overflow-y-auto bg-white shadow-2xl rounded-xl"
                 @click.away="showModal = false" x-transition:enter="transition ease duration-100 transform"
                 x-transition:enter-start="opacity-0 scale-90 translate-y-1"
                 x-transition:enter-end="opacity-100 scale-100 translate-y-0"
@@ -38,12 +38,16 @@
                 <form class="space-y-5" action="{{ route('products.store') }}" method="POST" autocomplete="off">
                     @csrf
                     <x-form.input label="Nama" name="name" placeholder="Nama product" />
+                    <x-form.input label="Merk" name="merk" placeholder="Merk product" />
                     <x-form.select placeholder="PILIH KATEGORI" name="category_id" label="Kategori">
                         @foreach ($categories as $category)
                             <option value="{{ $category->id }}">{{ $category->name }}</option>
                         @endforeach
                     </x-form.select>
-                    <x-form.input type="number" label="Harga" name="price" placeholder="Harga product" />
+                    <x-form.input type="number" label="Harga Beli" name="buy_price" placeholder="Harga beli product" />
+                    <x-form.input type="number" label="Harga Jual" name="price" placeholder="Harga jual product" />
+                    <x-form.input type="number" label="Stok" name="stock" placeholder="Stok product" />
+                    <x-form.input label="Satuan" name="unit" placeholder="Satuan product" />
 
                     <div class="mt-5 space-x-5 text-right">
                         <button type="submit"
@@ -89,9 +93,13 @@
             <x-slot:head>
                 <x-table.th>No</x-table.th>
                 <x-table.th>Nama</x-table.th>
+                <x-table.th>Merk</x-table.th>
                 <x-table.th>Kategori</x-table.th>
-                <x-table.th>Harga</x-table.th>
-                <x-table.th>Ditambahkan Pada</x-table.th>
+                <x-table.th>Harga Beli</x-table.th>
+                <x-table.th>Harga Jual</x-table.th>
+                <x-table.th>Stok</x-table.th>
+                <x-table.th>Satuan</x-table.th>
+                <x-table.th>Ditambahkan</x-table.th>
                 <x-table.th>Aksi</x-table.th>
             </x-slot:head>
             <x-slot:body>
@@ -99,8 +107,12 @@
                     <tr>
                         <x-table.td>{{ $loop->iteration }}</x-table.td>
                         <x-table.td>{{ $product->name }}</x-table.td>
+                        <x-table.td>{{ $product->merk }}</x-table.td>
                         <x-table.td>{{ $product->category->name }}</x-table.td>
-                        <x-table.td>Rp. {{ number_format($product->price, 2) }}</x-table.td>
+                        <x-table.td>Rp. {{ number_format($product->buy_price) }}</x-table.td>
+                        <x-table.td>Rp. {{ number_format($product->price) }}</x-table.td>
+                        <x-table.td>{{ $product->stock }}</x-table.td>
+                        <x-table.td>{{ $product->unit }}</x-table.td>
                         <x-table.td>{{ $product->created_at->format('j F Y') }}</x-table.td>
                         <x-table.td>
                             <x-table.action-data :with-detail="false"

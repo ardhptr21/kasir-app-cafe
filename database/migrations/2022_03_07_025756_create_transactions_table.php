@@ -21,6 +21,7 @@ return new class extends Migration
             $table->foreignIdFor(Product::class)->constrained();
             $table->string('transaction_code');
             $table->string('period');
+            $table->integer('capital');
             $table->integer('total_price')->default(0);
             $table->integer('quantity');
             $table->timestamps();

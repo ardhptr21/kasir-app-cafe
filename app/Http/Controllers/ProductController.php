@@ -25,6 +25,10 @@ class ProductController extends Controller
             'name' => 'required|string',
             'price' => 'required|numeric|min:0',
             'category_id' => 'required|numeric',
+            'buy_price' => 'required|numeric|min:0',
+            'stock' => 'required|numeric|min:0',
+            'unit' => 'required|string',
+            'merk' => 'required|string',
         ]);
 
         $product = Product::create($validated);
@@ -48,6 +52,10 @@ class ProductController extends Controller
             'name' => 'required|string',
             'price' => 'required|numeric|min:0',
             'category_id' => 'required|numeric',
+            'buy_price' => 'required|numeric|min:0',
+            'stock' => 'required|numeric|min:0',
+            'unit' => 'required|string',
+            'merk' => 'required|string',
         ]);
 
         $updated = $product->update($validated);
