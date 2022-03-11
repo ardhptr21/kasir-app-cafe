@@ -92,6 +92,7 @@
                 <x-table.th>Nama Product</x-table.th>
                 <x-table.th>Kode Transaksi</x-table.th>
                 <x-table.th>Jumlah</x-table.th>
+                <x-table.th>Modal</x-table.th>
                 <x-table.th>Total Harga</x-table.th>
                 <x-table.th>Kasir</x-table.th>
             </x-slot:head>
@@ -102,6 +103,7 @@
                         <x-table.td>{{ $transaction->product->name }}</x-table.td>
                         <x-table.td>{{ $transaction->transaction_code }}</x-table.td>
                         <x-table.td>{{ $transaction->quantity }}</x-table.td>
+                        <x-table.td>Rp. {{ number_format($transaction->capital) }}</x-table.td>
                         <x-table.td>Rp. {{ number_format($transaction->total_price) }}</x-table.td>
                         <x-table.td>{{ $transaction->user->name }}</x-table.td>
                     </tr>
@@ -123,7 +125,24 @@
                     <h3>Total Pendapatan</h3>
                     <span>:</span>
                 </div>
-                <p style="flex: 2">Rp. {{ array_sum(array_map(fn($v) => $v['total_price'], $transactions->toArray())) }}
+                <p style="flex: 2">Rp. {{ number_format(sum_all_array_key($transactions->toArray(), 'total_price')) }}
+                </p>
+            </div>
+            <div class="flex justify-between gap-5">
+                <div class="flex items-center justify-between font-bold" style="flex: 0.5">
+                    <h3>Total Modal</h3>
+                    <span>:</span>
+                </div>
+                <p style="flex: 2">Rp. {{ number_format(sum_all_array_key($transactions->toArray(), 'capital')) }}
+                </p>
+            </div>
+            <div class="flex justify-between gap-5">
+                <div class="flex items-center justify-between font-bold" style="flex: 0.5">
+                    <h3>Total Keuntungan</h3>
+                    <span>:</span>
+                </div>
+                <p style="flex: 2">Rp.
+                    {{ number_format(sum_all_array_key($transactions->toArray(), 'total_price') - sum_all_array_key($transactions->toArray(), 'capital')) }}
                 </p>
             </div>
         </div>

@@ -23,6 +23,7 @@
                     <x-table.th>No</x-table.th>
                     <x-table.th>Nama</x-table.th>
                     <x-table.th>Kategori</x-table.th>
+                    <x-table.th>Stok</x-table.th>
                     <x-table.th>Harga</x-table.th>
                     <x-table.th>Aksi</x-table.th>
                 </x-slot:head>
@@ -32,6 +33,7 @@
                             <x-table.td x-text="idx + 1"></x-table.td>
                             <x-table.td x-text="product.name"></x-table.td>
                             <x-table.td x-text="product.category.name"></x-table.td>
+                            <x-table.td x-text="product.stock"></x-table.td>
                             <x-table.td x-text="product.price"></x-table.td>
                             <x-table.td>
                                 <form action="{{ route('cart.store') }}" method="POST">
@@ -73,6 +75,7 @@
             <x-slot:head>
                 <x-table.th>No</x-table.th>
                 <x-table.th>Nama Product</x-table.th>
+                <x-table.th>Stok</x-table.th>
                 <x-table.th>Jumlah</x-table.th>
                 <x-table.th>Harga</x-table.th>
                 <x-table.th>Total</x-table.th>
@@ -84,9 +87,10 @@
                     <tr x-data="{quantity: {{ $cart->quantity }}}">
                         <x-table.td>{{ $loop->iteration }}</x-table.td>
                         <x-table.td>{{ $cart->product->name }}</x-table.td>
+                        <x-table.td>{{ $cart->product->stock }}</x-table.td>
                         <x-table.td>
-                            <x-form.input min="1" name="quantity" type="number" placeholder="Jumlah product"
-                                ::value="quantity" @change="quantity = $el.value" />
+                            <x-form.input min="1" max="{{ $cart->product->stock }}" name="quantity" type="number"
+                                placeholder="Jumlah product" ::value="quantity" @change="quantity = $el.value" />
                         </x-table.td>
                         <x-table.td>Rp. {{ number_format($cart->product->price) }}</x-table.td>
                         <x-table.td>Rp.

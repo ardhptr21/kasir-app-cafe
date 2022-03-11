@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -14,6 +15,7 @@ class CartController extends Controller
             'product_id' => 'required|exists:products,id',
             'total_price' => 'required|integer',
         ]);
+        $validated['capital'] = Product::find($validated['product_id'])->buy_price;
 
         $cart = Cart::create($validated);
 
@@ -29,7 +31,9 @@ class CartController extends Controller
         $validated = $request->validate([
             'quantity' => 'required|integer|min:1',
         ]);
+        $cart->load('product');
         $validated['total_price'] = $validated['quantity'] * $cart->product->price;
+        $validated['capital'] = $validated['quantity'] * $cart->product->buy_price;
 
         $updated = $cart->update($validated);
 

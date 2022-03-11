@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\TransactionsExport;
 use App\Models\Cart;
+use App\Models\Product;
 use App\Models\Transaction;
 use DateTime;
 use Illuminate\Http\Request;
@@ -60,8 +61,11 @@ class TransactionController extends Controller
             $v['created_at'] = now();
             $v['updated_at'] = now();
 
+            Product::find($v['product_id'])->decrement('stock', $v['quantity']);
+
             return array_merge($v, $merger);
-        }, Cart::all()->toArray());
+        }, Cart::get()->toArray());
+
 
         $transactions = Transaction::insert($carts);
 

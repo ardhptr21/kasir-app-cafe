@@ -21,8 +21,9 @@ return new class extends Migration
             $table->string('merk');
             $table->string('stock');
             $table->integer('price');
-            $table->string('buy_price');
+            $table->integer('buy_price');
             $table->string('unit');
+            $table->string('product_code');
             $table->timestamps();
         });
     }

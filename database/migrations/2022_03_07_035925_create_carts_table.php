@@ -21,6 +21,7 @@ return new class extends Migration
             $table->foreignIdFor(User::class)->constrained();
             $table->integer('total_price')->default(0);
             $table->integer('quantity')->default(1);
+            $table->integer('capital');
             $table->timestamps();
         });
     }

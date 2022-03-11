@@ -11,11 +11,13 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $filters = $request->only(['category', 'product']);
-        $products = Product::with('category')->filter($filters)->get();
+        $products = Product::with('category')->filter($filters);
         $categories = Category::all();
         if ($request->get('type') == 'json') {
+            $products = $products->where('stock', '>', 0)->get();
             return response()->json($products);
         }
+        $products = $products->get();
         return view('products.index', compact('categories', 'products'));
     }
 
@@ -30,6 +32,7 @@ class ProductController extends Controller
             'unit' => 'required|string',
             'merk' => 'required|string',
         ]);
+        $validated['product_code'] = random_alnum();
 
         $product = Product::create($validated);
 
