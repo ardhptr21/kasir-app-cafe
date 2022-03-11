@@ -11,17 +11,17 @@ class CartController extends Controller
     {
         $validated = $request->validate([
             'user_id' => 'required|exists:users,id',
-            'service_id' => 'required|exists:services,id',
+            'product_id' => 'required|exists:products,id',
             'total_price' => 'required|integer',
         ]);
 
         $cart = Cart::create($validated);
 
         if ($cart) {
-            return back()->with('cart_success', 'Berhasil menambahkan service ke keranjang');
+            return back()->with('cart_success', 'Berhasil menambahkan product ke keranjang');
         }
 
-        return back()->with('cart_error', 'Gagal menambahkan service ke keranjang');
+        return back()->with('cart_error', 'Gagal menambahkan product ke keranjang');
     }
 
     public function update(Request $request, Cart $cart)
@@ -29,15 +29,15 @@ class CartController extends Controller
         $validated = $request->validate([
             'quantity' => 'required|integer|min:1',
         ]);
-        $validated['total_price'] = $validated['quantity'] * $cart->service->price;
+        $validated['total_price'] = $validated['quantity'] * $cart->product->price;
 
         $updated = $cart->update($validated);
 
         if ($updated) {
-            return back()->with('cart_success', 'Berhasil mengubah jumlah service');
+            return back()->with('cart_success', 'Berhasil mengubah jumlah product');
         }
 
-        return back()->with('cart_error', 'Gagal mengubah jumlah service');
+        return back()->with('cart_error', 'Gagal mengubah jumlah product');
     }
 
     public function destroy(Cart $cart)
@@ -45,10 +45,10 @@ class CartController extends Controller
         $deleted = $cart->delete();
 
         if ($deleted) {
-            return back()->with('cart_success', 'Berhasil menghapus service dari keranjang');
+            return back()->with('cart_success', 'Berhasil menghapus product dari keranjang');
         }
 
-        return back()->with('cart_error', 'Gagal menghapus service dari keranjang');
+        return back()->with('cart_error', 'Gagal menghapus product dari keranjang');
     }
 
     public function truncate()

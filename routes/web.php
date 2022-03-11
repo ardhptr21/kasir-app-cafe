@@ -4,7 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PagesController;
-use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
@@ -34,12 +34,12 @@ Route::controller(PagesController::class)->middleware('auth')->group(function ()
 });
 
 /**----------------------------------------------
- * Service Routes
- * Base Route: /services
- * Description: Routes for the service
+ * product Routes
+ * Base Route: /products
+ * Description: Routes for the product
  *
  *---------------------------------------------**/
-Route::resource('/services', ServiceController::class)->middleware(['auth', 'can:admin'])->except(['show', 'create']);
+Route::resource('/products', ProductController::class)->middleware(['auth', 'can:admin'])->except(['show', 'create']);
 
 /**----------------------------------------------
  * Shop Routes

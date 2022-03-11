@@ -18,12 +18,12 @@ function addUrlSearchParams(data) {
     location.href = url.toString();
 }
 
-async function getServices(search, cb) {
+async function getProducts(search, cb) {
     if (search == "") {
         cb();
         return [];
     }
-    const url = `/services?service=${search}&type=json`;
+    const url = `/products?product=${search}&type=json`;
     try {
         const res = await fetch(url);
         const data = await res.json();

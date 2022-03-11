@@ -11,7 +11,7 @@
     <x-table.container>
         <x-slot:head>
             <x-table.th>No</x-table.th>
-            <x-table.th>Nama Service</x-table.th>
+            <x-table.th>Nama Product</x-table.th>
             <x-table.th>Jumlah</x-table.th>
             <x-table.th>Harga</x-table.th>
             <x-table.th>Total</x-table.th>
@@ -21,9 +21,9 @@
             @foreach ($transactions as $transaction)
                 <tr>
                     <x-table.td>{{ $loop->iteration }}</x-table.td>
-                    <x-table.td>{{ $transaction->service->name }}</x-table.td>
+                    <x-table.td>{{ $transaction->product->name }}</x-table.td>
                     <x-table.td>{{ $transaction->quantity }}</x-table.td>
-                    <x-table.td>Rp. {{ number_format($transaction->service->price) }}</x-table.td>
+                    <x-table.td>Rp. {{ number_format($transaction->product->price) }}</x-table.td>
                     <x-table.td>Rp. {{ number_format($transaction->total_price) }}</x-table.td>
                     <x-table.td>{{ $transaction->user->name }}</x-table.td>
                 </tr>

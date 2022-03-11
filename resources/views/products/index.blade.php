@@ -1,18 +1,18 @@
-@extends('layouts.base', ['title' => 'Services'])
+@extends('layouts.base', ['title' => 'Products'])
 
 @section('content')
-    <x-dashboard-title title="Service" description="Lihat dan kelola service" />
+    <x-dashboard-title title="Product" description="Lihat dan kelola product" />
 
-    @if (session('service_success'))
+    @if (session('product_success'))
         <div class="mb-5">
             <x-alert.success>
-                {{ session('service_success') }}
+                {{ session('product_success') }}
             </x-alert.success>
         </div>
-    @elseif (session('service_error'))
+    @elseif (session('product_error'))
         <div class="mb-5">
             <x-alert.error>
-                {{ session('service_error') }}
+                {{ session('product_error') }}
             </x-alert.error>
         </div>
     @endif
@@ -35,15 +35,15 @@
                 x-transition:leave-start="opacity-100 scale-100 translate-y-0"
                 x-transition:leave-end="opacity-0 scale-90 translate-y-1">
 
-                <form class="space-y-5" action="{{ route('services.store') }}" method="POST" autocomplete="off">
+                <form class="space-y-5" action="{{ route('products.store') }}" method="POST" autocomplete="off">
                     @csrf
-                    <x-form.input label="Nama" name="name" placeholder="Nama service" />
+                    <x-form.input label="Nama" name="name" placeholder="Nama product" />
                     <x-form.select placeholder="PILIH KATEGORI" name="category_id" label="Kategori">
                         @foreach ($categories as $category)
                             <option value="{{ $category->id }}">{{ $category->name }}</option>
                         @endforeach
                     </x-form.select>
-                    <x-form.input type="number" label="Harga" name="price" placeholder="Harga service" />
+                    <x-form.input type="number" label="Harga" name="price" placeholder="Harga product" />
 
                     <div class="mt-5 space-x-5 text-right">
                         <button type="submit"
@@ -56,8 +56,8 @@
         </div>
 
         <div class="w-full" style="flex: 2">
-            <x-form.input name="service" placeholder="Cari service" :is-edit="true" autocomplete="off"
-                value="{{ Request::get('service') ?? '' }}"
+            <x-form.input name="product" placeholder="Cari product" :is-edit="true" autocomplete="off"
+                value="{{ Request::get('product') ?? '' }}"
                 @keyup.enter="addUrlSearchParams({key: $el.name, value: $el.value})" />
         </div>
 
@@ -67,13 +67,12 @@
 
                 <option value="" selected>Semua</option>
                 @foreach ($categories as $category)
-                    <option value="{{ $category->name }}" @selected(Request::get('category')==$category->
-                        name)>{{ $category->name }}</option>
+                    <option value="{{ $category->name }}" @selected(Request::get('category') == $category->name)>{{ $category->name }}</option>
                 @endforeach
             </x-form.select>
         </div>
 
-        <a href="{{ route('services.index') }}">
+        <a href="{{ route('products.index') }}">
             <x-button.secondary>Reset</x-button.secondary>
         </a>
     </div>
@@ -85,7 +84,7 @@
         </ul>
     @endif
 
-    @if ($services->isNotEmpty())
+    @if ($products->isNotEmpty())
         <x-table.container>
             <x-slot:head>
                 <x-table.th>No</x-table.th>
@@ -96,17 +95,17 @@
                 <x-table.th>Aksi</x-table.th>
             </x-slot:head>
             <x-slot:body>
-                @foreach ($services as $service)
+                @foreach ($products as $product)
                     <tr>
                         <x-table.td>{{ $loop->iteration }}</x-table.td>
-                        <x-table.td>{{ $service->name }}</x-table.td>
-                        <x-table.td>{{ $service->category->name }}</x-table.td>
-                        <x-table.td>Rp. {{ number_format($service->price, 2) }}</x-table.td>
-                        <x-table.td>{{ $service->created_at->format('j F Y') }}</x-table.td>
+                        <x-table.td>{{ $product->name }}</x-table.td>
+                        <x-table.td>{{ $product->category->name }}</x-table.td>
+                        <x-table.td>Rp. {{ number_format($product->price, 2) }}</x-table.td>
+                        <x-table.td>{{ $product->created_at->format('j F Y') }}</x-table.td>
                         <x-table.td>
                             <x-table.action-data :with-detail="false"
-                                edit-action="{{ route('services.edit', [$service]) }}"
-                                remove-action="{{ route('services.destroy', [$service]) }}" />
+                                edit-action="{{ route('products.edit', [$product]) }}"
+                                remove-action="{{ route('products.destroy', [$product]) }}" />
                         </x-table.td>
                     </tr>
                 @endforeach
@@ -114,7 +113,7 @@
         </x-table.container>
     @else
         <x-alert.info>
-            Tidak ada service yang tersedia saat ini
+            Tidak ada product yang tersedia saat ini
         </x-alert.info>
     @endif
 

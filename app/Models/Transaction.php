@@ -12,7 +12,7 @@ class Transaction extends Model
 
     protected $fillable = [
         'user_id',
-        'service_id',
+        'product_id',
         'total_price',
         'quantity',
         'period',
@@ -34,9 +34,9 @@ class Transaction extends Model
         }
     }
 
-    public function service()
+    public function product()
     {
-        return $this->belongsTo(Service::class);
+        return $this->belongsTo(Product::class);
     }
 
     public function user()

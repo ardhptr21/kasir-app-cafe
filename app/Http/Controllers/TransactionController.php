@@ -25,14 +25,14 @@ class TransactionController extends Controller
         }
 
 
-        $transactions = Transaction::with(['service', 'user'])->filter($filters)->get();
+        $transactions = Transaction::with(['product', 'user'])->filter($filters)->get();
         return view('transactions.index', compact('transactions'));
     }
 
 
     public function create(Request $request)
     {
-        $carts = Cart::with(['service', 'user'])->get();
+        $carts = Cart::with(['product', 'user'])->get();
         return view('transactions.create', compact('carts'));
     }
 
@@ -42,7 +42,7 @@ class TransactionController extends Controller
         if (!$transaction_code) {
             abort(404);
         }
-        $transactions = Transaction::with(['service', 'user'])->where('transaction_code', $transaction_code)->get();
+        $transactions = Transaction::with(['product', 'user'])->where('transaction_code', $transaction_code)->get();
 
         return view('transactions.show', compact('transactions'));
     }
@@ -82,7 +82,7 @@ class TransactionController extends Controller
     public function export(Request $request)
     {
         $filters = $request->only(['date', 'search']);
-        $transactions = Transaction::with(['service', 'user'])->filter($filters)->get();
+        $transactions = Transaction::with(['product', 'user'])->filter($filters)->get();
         $date = null;
         if ($filters['search'] == 'day') {
             $date = DateTime::createFromFormat('Y-m-d', $filters['date'])->getTimestamp();
@@ -102,7 +102,7 @@ class TransactionController extends Controller
     {
         $cash = $request->cash ?? 0;
         $refund = $request->refund ?? 0;
-        $transactions = Transaction::with(['service'])->where('transaction_code', $request->transaction_code)->get();
+        $transactions = Transaction::with(['product'])->where('transaction_code', $request->transaction_code)->get();
         return view('transactions.print', compact('transactions', 'cash', 'refund'));
     }
 }

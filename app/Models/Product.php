@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Service extends Model
+class Product extends Model
 {
     use HasFactory;
 
@@ -25,8 +25,8 @@ class Service extends Model
             });
         });
 
-        $query->when($filters['service'] ?? false, function (Builder $query, string $service) {
-            $query->where('name', 'like', "%{$service}%");
+        $query->when($filters['product'] ?? false, function (Builder $query, string $product) {
+            $query->where('name', 'like', "%{$product}%");
         });
     }
 

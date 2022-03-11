@@ -1,7 +1,7 @@
-@extends('layouts.base', ['title' => 'Kategori'])
+@extends('layouts.base', ['title' => 'Barang'])
 
 @section('content')
-    <x-dashboard-title title="Produk" description="Lihat dan kelola produk" />
+    <x-dashboard-title title="Barang" description="Lihat dan kelola barang" />
     @if (session('category_success'))
         <x-alert.success closeable>{{ session('category_success') }}</x-alert.success>
     @elseif (session('category_error'))
@@ -41,7 +41,7 @@
                     <tr>
                         <x-table.td>{{ $loop->iteration }}</x-table.td>
                         <x-table.td>{{ $category->name }}</x-table.td>
-                        <x-table.td>{{ $category->services->count() }}</x-table.td>
+                        <x-table.td>{{ $category->products->count() }}</x-table.td>
                         <x-table.td>{{ $category->created_at->format('j F Y') }}</x-table.td>
                         <x-table.td>
                             <x-table.action-data

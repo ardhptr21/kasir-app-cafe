@@ -10,7 +10,7 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         $filters = $request->only(['category']);
-        $categories = Category::with('services')->filter($filters)->get();
+        $categories = Category::with('products')->filter($filters)->get();
         return view('kategori', compact('categories'));
     }
 

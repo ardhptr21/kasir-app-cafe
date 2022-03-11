@@ -6,8 +6,7 @@
 
     @can('admin')
         <x-side-bar.dropdown-container name="Data" icon="fa-solid fa-database">
-            <x-side-bar.item name="Service" icon="fa-solid fa-bell-concierge" link="{{ route('services.index') }}"
-                rounded />
+            <x-side-bar.item name="Barang" icon="fa-solid fa-box" link="{{ route('products.index') }}" rounded />
             <x-side-bar.item name="Kategori" icon="fa-solid fa-cubes" link="{{ route('categories.index') }}" rounded />
         </x-side-bar.dropdown-container>
     @endcan

@@ -10,15 +10,15 @@
     @endif
 
     <div class="flex flex-row justify-between w-full gap-3 p-5 my-5 bg-white rounded-md shadow-md"
-        x-data="{services: [], loading: false}">
+        x-data="{products: [], loading: false}">
         <div class="w-96">
             <h2 class="mb-3 text-xl font-bold">Pencarian</h2>
-            <x-form.input name="service" placeholder="Cari service"
-                @keyup.enter="loading = true; services = [];services = await getServices($el.value, () => loading = false)" />
+            <x-form.input name="product" placeholder="Cari product"
+                @keyup.enter="loading = true; products = [];products = await getProducts($el.value, () => loading = false)" />
         </div>
         <div class="w-full">
             <h2 class="mb-3 text-xl font-bold">Hasil pencarian</h2>
-            <x-table.container x-show="services.length">
+            <x-table.container x-show="products.length">
                 <x-slot:head>
                     <x-table.th>No</x-table.th>
                     <x-table.th>Nama</x-table.th>
@@ -27,18 +27,18 @@
                     <x-table.th>Aksi</x-table.th>
                 </x-slot:head>
                 <x-slot:body>
-                    <template x-for="(service, idx) in services" :key="service.id">
+                    <template x-for="(product, idx) in products" :key="product.id">
                         <tr>
                             <x-table.td x-text="idx + 1"></x-table.td>
-                            <x-table.td x-text="service.name"></x-table.td>
-                            <x-table.td x-text="service.category.name"></x-table.td>
-                            <x-table.td x-text="service.price"></x-table.td>
+                            <x-table.td x-text="product.name"></x-table.td>
+                            <x-table.td x-text="product.category.name"></x-table.td>
+                            <x-table.td x-text="product.price"></x-table.td>
                             <x-table.td>
                                 <form action="{{ route('cart.store') }}" method="POST">
                                     @csrf
-                                    <input type="hidden" name="service_id" :value="service.id">
+                                    <input type="hidden" name="product_id" :value="product.id">
                                     <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
-                                    <input type="hidden" name="total_price" :value="service.price">
+                                    <input type="hidden" name="total_price" :value="product.price">
                                     <button class="flex items-center justify-center p-2 text-white bg-green-500 rounded-md"
                                         type="submit">
                                         <i class="fa-solid fa-cart-plus"></i>
@@ -49,7 +49,7 @@
                     </template>
                 </x-slot:body>
             </x-table.container>
-            <x-alert.info x-show="!services.length">
+            <x-alert.info x-show="!products.length">
                 <p x-show="!loading">Tidak ada hasil pencarian</p>
 
                 <span x-show="loading">
@@ -72,7 +72,7 @@
         <x-table.container>
             <x-slot:head>
                 <x-table.th>No</x-table.th>
-                <x-table.th>Nama Service</x-table.th>
+                <x-table.th>Nama Product</x-table.th>
                 <x-table.th>Jumlah</x-table.th>
                 <x-table.th>Harga</x-table.th>
                 <x-table.th>Total</x-table.th>
@@ -83,12 +83,12 @@
                 @foreach ($carts as $cart)
                     <tr x-data="{quantity: {{ $cart->quantity }}}">
                         <x-table.td>{{ $loop->iteration }}</x-table.td>
-                        <x-table.td>{{ $cart->service->name }}</x-table.td>
+                        <x-table.td>{{ $cart->product->name }}</x-table.td>
                         <x-table.td>
-                            <x-form.input min="1" name="quantity" type="number" placeholder="Jumlah service"
+                            <x-form.input min="1" name="quantity" type="number" placeholder="Jumlah product"
                                 ::value="quantity" @change="quantity = $el.value" />
                         </x-table.td>
-                        <x-table.td>Rp. {{ number_format($cart->service->price) }}</x-table.td>
+                        <x-table.td>Rp. {{ number_format($cart->product->price) }}</x-table.td>
                         <x-table.td>Rp.
                             {{ number_format($cart->total_price) }}
                         </x-table.td>

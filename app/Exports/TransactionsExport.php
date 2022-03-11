@@ -30,13 +30,13 @@ class TransactionsExport implements FromCollection, WithHeadings, WithMapping, W
 
     public function headings(): array
     {
-        return ['Nama Service', 'Kode Transaksi', 'Jumlah', 'Total Harga', 'Kasir', 'Tanggal'];
+        return ['Nama Product', 'Kode Transaksi', 'Jumlah', 'Total Harga', 'Kasir', 'Tanggal'];
     }
 
     public function map($transaction): array
     {
         return [
-            $transaction->service->name,
+            $transaction->product->name,
             $transaction->transaction_code,
             $transaction->quantity,
             $transaction->total_price,

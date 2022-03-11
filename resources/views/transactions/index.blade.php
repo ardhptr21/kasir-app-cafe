@@ -89,7 +89,7 @@
         <x-table.container>
             <x-slot:head>
                 <x-table.th>No</x-table.th>
-                <x-table.th>Nama Service</x-table.th>
+                <x-table.th>Nama Product</x-table.th>
                 <x-table.th>Kode Transaksi</x-table.th>
                 <x-table.th>Jumlah</x-table.th>
                 <x-table.th>Total Harga</x-table.th>
@@ -99,7 +99,7 @@
                 @foreach ($transactions as $transaction)
                     <tr>
                         <x-table.td>{{ $loop->iteration }}</x-table.td>
-                        <x-table.td>{{ $transaction->service->name }}</x-table.td>
+                        <x-table.td>{{ $transaction->product->name }}</x-table.td>
                         <x-table.td>{{ $transaction->transaction_code }}</x-table.td>
                         <x-table.td>{{ $transaction->quantity }}</x-table.td>
                         <x-table.td>Rp. {{ number_format($transaction->total_price) }}</x-table.td>
@@ -112,10 +112,10 @@
         <div class="w-full mt-5 border-t-2 border-black">
             <div class="flex justify-between gap-5 mt-3">
                 <div class="flex items-center justify-between font-bold" style="flex: 0.5">
-                    <h3>Total Service</h3>
+                    <h3>Total Product</h3>
                     <span>:</span>
                 </div>
-                <p style="flex: 2">{{ array_sum(array_map(fn($v) => $v['quantity'], $transactions->toArray())) }} Service
+                <p style="flex: 2">{{ array_sum(array_map(fn($v) => $v['quantity'], $transactions->toArray())) }} Product
                 </p>
             </div>
             <div class="flex justify-between gap-5">

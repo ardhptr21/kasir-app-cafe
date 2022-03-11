@@ -31,8 +31,8 @@ class Category extends Model
         });
     }
 
-    public function services()
+    public function products()
     {
-        return $this->hasMany(Service::class);
+        return $this->hasMany(Product::class);
     }
 }

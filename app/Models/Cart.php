@@ -11,7 +11,7 @@ class Cart extends Model
 
     protected $fillable = [
         'user_id',
-        'service_id',
+        'product_id',
         'total_price',
         'quantity',
     ];
@@ -21,8 +21,8 @@ class Cart extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function service()
+    public function product()
     {
-        return $this->belongsTo(Service::class);
+        return $this->belongsTo(Product::class);
     }
 }
