@@ -90,7 +90,7 @@
                         </x-table.td>
                         <x-table.td>Rp. {{ number_format($cart->service->price) }}</x-table.td>
                         <x-table.td>Rp.
-                            {{ $member?->point == (int) env('APP_MAX_MEMBER_POINT') ? 0 : number_format($cart->total_price) }}
+                            {{ number_format($cart->total_price) }}
                         </x-table.td>
                         <x-table.td>{{ $cart->user->name }}</x-table.td>
                         <x-table.td>
@@ -123,46 +123,19 @@
         </x-table.container>
 
         <div class="flex items-start justify-between mt-5">
-            <div class="w-full space-y-3">
+            <div class="w-full">
                 <x-form.input name="total_all" placeholder="Total Semua" :is-edit="false"
-                    value="Rp. {{ $member?->point == (int) env('APP_MAX_MEMBER_POINT')? 0: sum_all_array_key($carts->toArray(), 'total_price') }}" />
-                @if ($member)
-                    <x-form.input name="member" placeholder="Member" :is-edit="false" value="{{ $member?->name }}" />
-                    <x-form.input name="member_code" placeholder="Kode" :is-edit="false"
-                        value="{{ $member?->member_code }}" />
-                    <x-form.input name="point" placeholder="Point" :is-edit="false" value="{{ $member?->point }}" />
-                @endif
+                    value="Rp. {{ sum_all_array_key($carts->toArray(), 'total_price') }}" />
             </div>
-            <div class="w-full space-y-3">
-                @if (!$member)
-                    <form class="flex items-center justify-center w-full gap-3" action="{{ route('members.check') }}"
-                        method="POST">
-                        @csrf
-                        <x-form.input name="member_code" placeholder="Masukkan kode member" autocomplete="off" />
-                        <x-button.success type="submit" class="w-64"><i class="fa-solid fa-user-check"></i> Member
-                        </x-button.success>
-                    </form>
-                @endif
-                <form class="flex items-center justify-center w-full gap-3" action="{{ route('transactions.store') }}"
-                    method="POST">
-                    @csrf
-                    <x-form.input name="cash" placeholder="Uang Pembayaran" type="number" required
-                        min="{{ $member?->point == (int) env('APP_MAX_MEMBER_POINT')? 0: sum_all_array_key($carts->toArray(), 'total_price') }}"
-                        value="{{ $member?->point == (int) env('APP_MAX_MEMBER_POINT') ? 0 : null }}"
-                        :readonly="$member?->point == (int) env('APP_MAX_MEMBER_POINT')" />
-                    <input type="hidden" name="total_all"
-                        value="{{ $member?->point == (int) env('APP_MAX_MEMBER_POINT')? 0: sum_all_array_key($carts->toArray(), 'total_price') }}">
-                    @if ($member)
-                        <input type="hidden" name="member" value="{{ $member->member_code }}">
-                    @endif
-                    <x-button.primary class="w-64" type="submit"><i class="fa-solid fa-coins"></i> Bayar
-                    </x-button.primary>
-                </form>
-
-                @if ($member?->point == env('APP_MAX_MEMBER_POINT'))
-                    <x-alert.info>Mendapatkan service gratis karena point member memenuhi syarat</x-alert.info>
-                @endif
-            </div>
+            <form class="flex items-center justify-center w-full gap-3" action="{{ route('transactions.store') }}"
+                method="POST">
+                @csrf
+                <x-form.input name="cash" placeholder="Uang Pembayaran" type="number" required
+                    min="{{ sum_all_array_key($carts->toArray(), 'total_price') }}" />
+                <input type="hidden" name="total_all" value="{{ sum_all_array_key($carts->toArray(), 'total_price') }}">
+                <x-button.primary class="w-64" type="submit"><i class="fa-solid fa-coins"></i> Bayar
+                </x-button.primary>
+            </form>
         </div>
     @else
         <x-alert.info>Keranjang transaksi masih kosong</x-alert.info>

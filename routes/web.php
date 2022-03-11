@@ -3,7 +3,6 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\ShopController;
@@ -69,15 +68,6 @@ Route::resource('/categories', CategoryController::class)->middleware(['auth', '
  *---------------------------------------------**/
 Route::resource('/users', UserController::class)->middleware('auth')->except(['create', 'edit']);
 Route::put('/users/{user}/change-password', [UserController::class, 'changePassword'])->middleware('auth')->name('users.change-password');
-
-/**----------------------------------------------
- * Member Routes
- * Base Route: /members
- * Description: Routes for members
- *
- *---------------------------------------------**/
-Route::resource('/members', MemberController::class)->middleware(['auth', 'can:admin'])->except(['create', 'edit']);
-Route::post('/members/check', [MemberController::class, 'check'])->middleware(['auth'])->name('members.check');
 
 /**----------------------------------------------
  * Transactions Routes

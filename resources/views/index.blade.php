@@ -8,7 +8,5 @@
             icon="fa-solid fa-bell-concierge" />
         <x-card.overview title="Total Kategori" value="{{ $categoriesCount }}" color="bg-blue-500"
             icon="fa-solid fa-cubes" />
-        <x-card.overview title="Total Member" value="{{ $membersCount }}" color="bg-yellow-500"
-            icon="fa-solid fa-user-check" />
     </div>
 @endsection
