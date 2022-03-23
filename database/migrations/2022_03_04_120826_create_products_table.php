@@ -17,7 +17,7 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignIdFor(Category::class)->constrained();
+            $table->foreignIdFor(Category::class)->constrained()->onDelete('cascade');
             $table->string('merk');
             $table->string('stock');
             $table->integer('price');
