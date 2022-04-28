@@ -17,6 +17,9 @@ class ProductController extends Controller
             $products = $products->where('stock', '>', 0)->get();
             return response()->json($products);
         }
+        if (!auth()->user()->isAdmin() && !auth()->user()->isOwner()) {
+            abort(403);
+        }
         $products = $products->get();
         return view('products.index', compact('categories', 'products'));
     }

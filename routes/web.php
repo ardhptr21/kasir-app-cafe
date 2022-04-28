@@ -45,7 +45,7 @@ Route::controller(PagesController::class)->middleware('auth')->group(function ()
  * Description: Routes for the product
  *
  *---------------------------------------------**/
-Route::resource('/products', ProductController::class)->middleware(['auth', 'can:admin'])->except(['show', 'create']);
+Route::resource('/products', ProductController::class)->middleware(['auth'])->except(['show', 'create']);
 
 /**----------------------------------------------
  * Shop Routes
